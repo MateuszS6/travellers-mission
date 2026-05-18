@@ -5,6 +5,12 @@ import csv
 import button
 from pathlib import Path
 
+BASE_DIR = Path(__file__).resolve().parent
+ASSETS_DIR = BASE_DIR / "assets"
+IMG_DIR = ASSETS_DIR / "img"
+FONT_DIR = ASSETS_DIR / "fonts"
+LEVEL_DIR = BASE_DIR / "levels"
+
 pygame.init()
 
 screen_width = 500
@@ -40,7 +46,7 @@ shoot = False
 # images
 # title screen
 landscape_img = pygame.image.load(
-    "assets/img/background/TitleScreenBG.jpg"
+    ASSETS_DIR / IMG_DIR / "background" / "TitleScreenBG.jpg"
 ).convert_alpha()
 landscape_img = pygame.transform.scale(
     landscape_img,
@@ -49,24 +55,32 @@ landscape_img = pygame.transform.scale(
 # rect = landscape_img.get_rect()
 # rect.center = (x, y)
 # buttons
-start_img = pygame.image.load("assets/img/start_btn.png").convert_alpha()
-quit_img = pygame.image.load("assets/img/exit_btn.png").convert_alpha()
+start_img = pygame.image.load(ASSETS_DIR / IMG_DIR / "start_btn.png").convert_alpha()
+quit_img = pygame.image.load(ASSETS_DIR / IMG_DIR / "exit_btn.png").convert_alpha()
 # background
-sky_img = pygame.image.load("assets/img/background/sky.png").convert_alpha()
+sky_img = pygame.image.load(
+    ASSETS_DIR / IMG_DIR / "background" / "sky.png"
+).convert_alpha()
 sky_img = pygame.transform.scale(
     sky_img, (int(sky_img.get_width() * 0.625), int(sky_img.get_height() * 0.625))
 )
-mountains_img = pygame.image.load("assets/img/background/mountains.png").convert_alpha()
+mountains_img = pygame.image.load(
+    ASSETS_DIR / IMG_DIR / "background" / "mountains.png"
+).convert_alpha()
 mountains_img = pygame.transform.scale(
     mountains_img,
     (int(mountains_img.get_width() * 0.625), int(mountains_img.get_height() * 0.625)),
 )
-trees1_img = pygame.image.load("assets/img/background/trees1.png").convert_alpha()
+trees1_img = pygame.image.load(
+    ASSETS_DIR / IMG_DIR / "background" / "trees1.png"
+).convert_alpha()
 trees1_img = pygame.transform.scale(
     trees1_img,
     (int(trees1_img.get_width() * 0.625), int(trees1_img.get_height() * 0.625)),
 )
-trees2_img = pygame.image.load("assets/img/background/trees2.png").convert_alpha()
+trees2_img = pygame.image.load(
+    ASSETS_DIR / IMG_DIR / "background" / "trees2.png"
+).convert_alpha()
 trees2_img = pygame.transform.scale(
     trees2_img,
     (int(trees2_img.get_width() * 0.625), int(trees2_img.get_height() * 0.625)),
@@ -74,35 +88,43 @@ trees2_img = pygame.transform.scale(
 # tiles
 tiles = []
 for x in range(tile_types):
-    img = pygame.image.load(f"assets/img/tile/{x}.png")
+    img = pygame.image.load(ASSETS_DIR / IMG_DIR / "tile" / f"{x}.png")
     img = pygame.transform.scale(img, (tile_size, tile_size))
     tiles.append(img)
 # bullet
-bullet_img = pygame.image.load("assets/img/icons/IonBullet.png").convert_alpha()
+bullet_img = pygame.image.load(
+    ASSETS_DIR / IMG_DIR / "icons" / "IonBullet.png"
+).convert_alpha()
 bullet_img = pygame.transform.scale(
     bullet_img, (int(bullet_img.get_width() * 2), int(bullet_img.get_height() * 2))
 )
 # pick-ups
-reload_img = pygame.image.load("assets/img/icons/ReloadBox.png").convert_alpha()
+reload_img = pygame.image.load(
+    ASSETS_DIR / IMG_DIR / "icons" / "ReloadBox.png"
+).convert_alpha()
 reload_img = pygame.transform.scale(
     reload_img,
     (int(reload_img.get_width() * 2 / 3), int(reload_img.get_height() * 2 / 3)),
 )
-key_img = pygame.image.load("assets/img/icons/Key.png").convert_alpha()
+key_img = pygame.image.load(ASSETS_DIR / IMG_DIR / "icons" / "Key.png").convert_alpha()
 key_img = pygame.transform.scale(
     key_img, (int(key_img.get_width() * 2 / 3), int(key_img.get_height() * 2 / 3))
 )
 items = {"Reload": reload_img, "Key": key_img}
 # icons
-h_img = pygame.image.load("assets/img/icons/Health.png").convert_alpha()
-r_img = pygame.image.load("assets/img/icons/Reload.png").convert_alpha()
-a_img = pygame.image.load("assets/img/icons/Ammo.png").convert_alpha()
-health = pygame.image.load("assets/img/icons/PlusHealth.png").convert_alpha()
+h_img = pygame.image.load(ASSETS_DIR / IMG_DIR / "icons" / "Health.png").convert_alpha()
+r_img = pygame.image.load(ASSETS_DIR / IMG_DIR / "icons" / "Reload.png").convert_alpha()
+a_img = pygame.image.load(ASSETS_DIR / IMG_DIR / "icons" / "Ammo.png").convert_alpha()
+health = pygame.image.load(
+    ASSETS_DIR / IMG_DIR / "icons" / "PlusHealth.png"
+).convert_alpha()
 # heart = pygame.transform.scale(heart, (int(heart.get_width() * 1.5), int(heart.get_height() * 1.5)))
-shield = pygame.image.load("assets/img/icons/PlusShield.png").convert_alpha()
+shield = pygame.image.load(
+    ASSETS_DIR / IMG_DIR / "icons" / "PlusShield.png"
+).convert_alpha()
 # shield = pygame.transform.scale(shield, (int(shield.get_width() * 1.5), int(shield.get_height() * 1.5)))
 # exit
-exit_img = pygame.image.load("assets/img/tile/19.png").convert_alpha()
+exit_img = pygame.image.load(ASSETS_DIR / IMG_DIR / "tile" / "19.png").convert_alpha()
 
 # colours
 BG = (28, 35, 51)
@@ -115,9 +137,9 @@ transparent_black = (0, 0, 0)
 # transparent_black.set_alpha(50)
 
 # fonts
-font = pygame.font.Font("BAHNSCHRIFT.TTF", 20)
-title_font = pygame.font.Font("BAHNSCHRIFT.TTF", 50)
-sub_font = pygame.font.Font("BAHNSCHRIFT.TTF", 30)
+font = pygame.font.Font(ASSETS_DIR / FONT_DIR / "BAHNSCHRIFT.TTF", 20)
+title_font = pygame.font.Font(ASSETS_DIR / FONT_DIR / "BAHNSCHRIFT.TTF", 50)
+sub_font = pygame.font.Font(ASSETS_DIR / FONT_DIR / "BAHNSCHRIFT.TTF", 30)
 
 # buttons
 start_button = button.Button(30, screen_height - 130, start_img, 0.4)
@@ -189,10 +211,10 @@ class Soldier(pygame.sprite.Sprite):
             # reset temporary image list
             temp_list = []
             # count number of files in folder
-            num_frames = len(os.listdir(f"assets/img/{self.char_type}/{animation}"))
+            num_frames = len(os.listdir( ASSETS_DIR / IMG_DIR / self.char_type / animation ))
             for i in range(num_frames):
                 img = pygame.image.load(
-                    f"assets/img/{self.char_type}/{animation}/{i}.png"
+                    ASSETS_DIR / IMG_DIR / self.char_type / animation / f"{i}.png"
                 ).convert_alpha()
                 img = pygame.transform.scale(
                     img, (int(img.get_width() * scale), int(img.get_height() * scale))
@@ -599,7 +621,7 @@ for row in range(rows):
     r = [-1] * columns
     world_data.append(r)
 # load level data and create world
-with open(f"level{level}_data.csv", newline="") as csv_file:
+with open(ASSETS_DIR / LEVEL_DIR / f"level{level}_data.csv", newline="") as csv_file:
     reader = csv.reader(csv_file, delimiter=",")
     for x, row in enumerate(reader):
         for y, tile in enumerate(row):
