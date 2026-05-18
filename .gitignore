@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.pythonlibs/
+
+# Replit
+.replit
+replit.nix
+VENV.md
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
