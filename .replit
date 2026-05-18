@@ -7,10 +7,16 @@ audio = true
 modules = ["python-3.8"]
 
 [nix]
-channel = "stable-21_11"
+channel = "stable-24_05"
 packages = ["SDL2", "SDL2_image", "SDL2_mixer", "SDL2_ttf", "fontconfig", "freetype", "libjpeg", "libpng", "pkg-config", "portmidi"]
 
 [gitHubImport]
 requiredFiles = [".replit", "replit.nix", "venv", ".config"]
 
 [env]
+
+[agent]
+expertMode = true
+
+[deployment]
+deploymentTarget = "cloudrun"

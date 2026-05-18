@@ -11,6 +11,8 @@ IMG_DIR = ASSETS_DIR / "img"
 FONT_DIR = ASSETS_DIR / "fonts"
 LEVEL_DIR = ASSETS_DIR / "levels"
 
+print("MAIN.PY STARTED", flush=True)
+
 pygame.init()
 
 screen_width = 500
@@ -45,12 +47,12 @@ shoot = False
 
 # images
 # title screen
-landscape_img = pygame.image.load(
-    IMG_DIR / "background" / "TitleScreenBG.jpg"
-).convert_alpha()
+landscape_img = pygame.image.load(IMG_DIR / "background" /
+                                  "TitleScreenBG.jpg").convert_alpha()
 landscape_img = pygame.transform.scale(
     landscape_img,
-    (int(landscape_img.get_width() * 0.28), int(landscape_img.get_height() * 0.28)),
+    (int(landscape_img.get_width() * 0.28),
+     int(landscape_img.get_height() * 0.28)),
 )
 # rect = landscape_img.get_rect()
 # rect.center = (x, y)
@@ -58,32 +60,30 @@ landscape_img = pygame.transform.scale(
 start_img = pygame.image.load(IMG_DIR / "start_btn.png").convert_alpha()
 quit_img = pygame.image.load(IMG_DIR / "exit_btn.png").convert_alpha()
 # background
-sky_img = pygame.image.load(
-    IMG_DIR / "background" / "sky.png"
-).convert_alpha()
+sky_img = pygame.image.load(IMG_DIR / "background" / "sky.png").convert_alpha()
 sky_img = pygame.transform.scale(
-    sky_img, (int(sky_img.get_width() * 0.625), int(sky_img.get_height() * 0.625))
-)
-mountains_img = pygame.image.load(
-    IMG_DIR / "background" / "mountains.png"
-).convert_alpha()
+    sky_img,
+    (int(sky_img.get_width() * 0.625), int(sky_img.get_height() * 0.625)))
+mountains_img = pygame.image.load(IMG_DIR / "background" /
+                                  "mountains.png").convert_alpha()
 mountains_img = pygame.transform.scale(
     mountains_img,
-    (int(mountains_img.get_width() * 0.625), int(mountains_img.get_height() * 0.625)),
+    (int(mountains_img.get_width() * 0.625),
+     int(mountains_img.get_height() * 0.625)),
 )
-trees1_img = pygame.image.load(
-    IMG_DIR / "background" / "trees1.png"
-).convert_alpha()
+trees1_img = pygame.image.load(IMG_DIR / "background" /
+                               "trees1.png").convert_alpha()
 trees1_img = pygame.transform.scale(
     trees1_img,
-    (int(trees1_img.get_width() * 0.625), int(trees1_img.get_height() * 0.625)),
+    (int(trees1_img.get_width() * 0.625), int(
+        trees1_img.get_height() * 0.625)),
 )
-trees2_img = pygame.image.load(
-    IMG_DIR / "background" / "trees2.png"
-).convert_alpha()
+trees2_img = pygame.image.load(IMG_DIR / "background" /
+                               "trees2.png").convert_alpha()
 trees2_img = pygame.transform.scale(
     trees2_img,
-    (int(trees2_img.get_width() * 0.625), int(trees2_img.get_height() * 0.625)),
+    (int(trees2_img.get_width() * 0.625), int(
+        trees2_img.get_height() * 0.625)),
 )
 # tiles
 tiles = []
@@ -92,36 +92,31 @@ for x in range(tile_types):
     img = pygame.transform.scale(img, (tile_size, tile_size))
     tiles.append(img)
 # bullet
-bullet_img = pygame.image.load(
-    IMG_DIR / "icon" / "IonBullet.png"
-).convert_alpha()
+bullet_img = pygame.image.load(IMG_DIR / "icon" /
+                               "IonBullet.png").convert_alpha()
 bullet_img = pygame.transform.scale(
-    bullet_img, (int(bullet_img.get_width() * 2), int(bullet_img.get_height() * 2))
-)
+    bullet_img,
+    (int(bullet_img.get_width() * 2), int(bullet_img.get_height() * 2)))
 # pick-ups
-reload_img = pygame.image.load(
-    IMG_DIR / "icon" / "ReloadBox.png"
-).convert_alpha()
+reload_img = pygame.image.load(IMG_DIR / "icon" /
+                               "ReloadBox.png").convert_alpha()
 reload_img = pygame.transform.scale(
     reload_img,
-    (int(reload_img.get_width() * 2 / 3), int(reload_img.get_height() * 2 / 3)),
+    (int(reload_img.get_width() * 2 / 3), int(
+        reload_img.get_height() * 2 / 3)),
 )
 key_img = pygame.image.load(IMG_DIR / "icon" / "Key.png").convert_alpha()
 key_img = pygame.transform.scale(
-    key_img, (int(key_img.get_width() * 2 / 3), int(key_img.get_height() * 2 / 3))
-)
+    key_img,
+    (int(key_img.get_width() * 2 / 3), int(key_img.get_height() * 2 / 3)))
 items = {"Reload": reload_img, "Key": key_img}
 # icon
 h_img = pygame.image.load(IMG_DIR / "icon" / "Health.png").convert_alpha()
 r_img = pygame.image.load(IMG_DIR / "icon" / "Reload.png").convert_alpha()
 a_img = pygame.image.load(IMG_DIR / "icon" / "Ammo.png").convert_alpha()
-health = pygame.image.load(
-    IMG_DIR / "icon" / "PlusHealth.png"
-).convert_alpha()
+health = pygame.image.load(IMG_DIR / "icon" / "PlusHealth.png").convert_alpha()
 # heart = pygame.transform.scale(heart, (int(heart.get_width() * 1.5), int(heart.get_height() * 1.5)))
-shield = pygame.image.load(
-    IMG_DIR / "icon" / "PlusShield.png"
-).convert_alpha()
+shield = pygame.image.load(IMG_DIR / "icon" / "PlusShield.png").convert_alpha()
 # shield = pygame.transform.scale(shield, (int(shield.get_width() * 1.5), int(shield.get_height() * 1.5)))
 # exit
 exit_img = pygame.image.load(IMG_DIR / "tile" / "19.png").convert_alpha()
@@ -162,8 +157,10 @@ def draw_bg():
     # screen.fill(BG)
     # pygame.draw.line(screen, grey, (35, 9), (35, 113))
     screen.blit(sky_img, (0, 0))
-    screen.blit(mountains_img, (0, screen_height - mountains_img.get_height() - 187.5))
-    screen.blit(trees1_img, (0, screen_height - trees1_img.get_height() - 93.75))
+    screen.blit(mountains_img,
+                (0, screen_height - mountains_img.get_height() - 187.5))
+    screen.blit(trees1_img,
+                (0, screen_height - trees1_img.get_height() - 93.75))
     screen.blit(trees2_img, (0, screen_height - trees2_img.get_height()))
     # pygame.draw.rect(screen, transparent_black, (0, 0, 104, 14))
 
@@ -174,6 +171,7 @@ def draw_text(text, font, colour, x, y):
 
 
 class Soldier(pygame.sprite.Sprite):
+
     def __init__(self, char_type, x, y, scale, speed, ammo):
         super().__init__()
 
@@ -214,12 +212,10 @@ class Soldier(pygame.sprite.Sprite):
             # count number of files in folder
             num_frames = len(os.listdir(IMG_DIR / self.char_type / animation))
             for i in range(num_frames):
-                img = pygame.image.load(
-                    IMG_DIR / self.char_type / animation / f"{i}.png"
-                ).convert_alpha()
-                img = pygame.transform.scale(
-                    img, (int(img.get_width() * scale), int(img.get_height() * scale))
-                )
+                img = pygame.image.load(IMG_DIR / self.char_type / animation /
+                                        f"{i}.png").convert_alpha()
+                img = pygame.transform.scale(img, (int(
+                    img.get_width() * scale), int(img.get_height() * scale)))
                 temp_list.append(img)
             self.animations.append(temp_list)
         self.image = self.animations[self.action][self.frame_index]
@@ -228,11 +224,7 @@ class Soldier(pygame.sprite.Sprite):
         self.width = self.image.get_width()
         self.height = self.image.get_height()
 
-    @property
-    def alive(self):
-        return self._alive
-
-    def update(self):
+    def update(self, *args, **kwargs):
         self.update_animation()
         self.check_alive()
         # update shooting cooldown
@@ -254,7 +246,7 @@ class Soldier(pygame.sprite.Sprite):
             self.direction = 1
             self.flip = False
         # jump
-        if self.jump == True and self.in_air == False:
+        if self.jump and not self.in_air:
             self.vel_y = -10
             self.jump = False
             self.in_air = True
@@ -266,16 +258,14 @@ class Soldier(pygame.sprite.Sprite):
         # check collision with obstacles
         for tile in world.obstacles:
             # x direction
-            if tile[1].colliderect(
-                self.rect.x + dx, self.rect.y, self.width, self.height
-            ):
+            if tile[1].colliderect(self.rect.x + dx, self.rect.y, self.width,
+                                   self.height):
                 dx = 0
-                if self.in_air == False:
+                if not self.in_air:
                     self.update_action(0)  # 0: idle
             # y direction
-            if tile[1].colliderect(
-                self.rect.x, self.rect.y + dy, self.width, self.height
-            ):
+            if tile[1].colliderect(self.rect.x, self.rect.y + dy, self.width,
+                                   self.height):
                 # check if jumping below ground above
                 if self.vel_y < 0:
                     self.vel_y = 0
@@ -295,10 +285,8 @@ class Soldier(pygame.sprite.Sprite):
         self.rect.y += dy
         # update camera scroll with player position
         if self.char_type == "player":
-            if (
-                self.rect.right > screen_width - scroll_thresh
-                or self.rect.left < screen_width
-            ):
+            if (self.rect.right > screen_width - scroll_thresh
+                    or self.rect.left < screen_width):
                 self.rect.x -= dx
                 cam_scroll = -dx
         return cam_scroll
@@ -307,7 +295,8 @@ class Soldier(pygame.sprite.Sprite):
         if self.shoot_cooldown == 0 and self.ammo > 0:
             self.shoot_cooldown = 20
             bullet = Bullet(
-                self.rect.centerx + (0.75 * self.rect.size[0] * self.direction),
+                self.rect.centerx +
+                (0.75 * self.rect.size[0] * self.direction),
                 self.rect.centery,
                 self.direction,
             )
@@ -317,7 +306,7 @@ class Soldier(pygame.sprite.Sprite):
 
     def ai(self):
         if self.alive and player.alive:
-            if self.idle == False and random.randint(1, 200) == 1:
+            if not self.idle and random.randint(1, 200) == 1:
                 self.update_action(0)  # 0: idle
                 self.idle = True
                 self.idle_counter = 50
@@ -327,7 +316,7 @@ class Soldier(pygame.sprite.Sprite):
                 self.update_action(0)  # 0: idle
                 self.shoot()
             else:
-                if self.idle == False:
+                if not self.idle:
                     if self.direction == 1:
                         ai_moving_right = True
                     else:
@@ -348,7 +337,7 @@ class Soldier(pygame.sprite.Sprite):
                     self.idle_counter -= 1
                     if self.idle_counter <= 0:
                         self.idle = False
-        elif self.alive and player.alive == False:
+        elif self.alive and not player.alive:
             self.update_action(0)  # 0: idle
         # scroll
         self.rect.x += cam_scroll
@@ -385,14 +374,20 @@ class Soldier(pygame.sprite.Sprite):
             self.update_action(3)  # 3: death
 
     def draw(self):
-        screen.blit(pygame.transform.flip(self.image, self.flip, False), self.rect)
+        screen.blit(pygame.transform.flip(self.image, self.flip, False),
+                    self.rect)
 
 
 class World:
+
     def __init__(self):
         self.obstacles = []
 
     def process_data(self, data):
+        player = None
+        health_bar = None
+        shield_bar = None
+
         # iterate through level data file
         for y, row in enumerate(data):
             for x, tile in enumerate(row):
@@ -410,20 +405,21 @@ class World:
                         water_group.add(water)
                     elif tile in range(11, 15):
                         # decoration
-                        decoration = Decoration(img, x * tile_size, y * tile_size)
+                        decoration = Decoration(img, x * tile_size,
+                                                y * tile_size)
                         decoration_group.add(decoration)
                     elif tile == 15:
                         # player
-                        player = Soldier(
-                            "player", x * tile_size, y * tile_size, 1.5, 3, 10
-                        )
-                        health_bar = HealthBar(40, 10, player.health, player.health)
-                        shield_bar = ShieldBar(40, 10, player.shield, player.shield)
+                        player = Soldier("player", x * tile_size,
+                                         y * tile_size, 1.5, 3, 10)
+                        health_bar = HealthBar(40, 10, player.health,
+                                               player.health)
+                        shield_bar = ShieldBar(40, 10, player.shield,
+                                               player.shield)
                     elif tile == 16:
                         # enemy
-                        enemy = Soldier(
-                            "enemy", x * tile_size, y * tile_size, 1.5, 2, 20
-                        )
+                        enemy = Soldier("enemy", x * tile_size, y * tile_size,
+                                        1.5, 2, 20)
                         enemy_group.add(enemy)
                     elif tile == 17:
                         # reload box
@@ -437,6 +433,9 @@ class World:
                         # exit
                         exit = Exit(exit_img, x * tile_size, y * tile_size)
                         exit_group.add(exit)
+
+        if player is None or health_bar is None or shield_bar is None:
+            raise ValueError("Level data must include a player spawn tile.")
         return player, health_bar, shield_bar
 
     def draw(self):
@@ -447,6 +446,7 @@ class World:
 
 
 class Water(pygame.sprite.Sprite):
+
     def __init__(self, img, x, y):
         super().__init__()
         self.image = img
@@ -456,12 +456,13 @@ class Water(pygame.sprite.Sprite):
             y + (tile_size - self.image.get_height()),
         )
 
-    def update(self):
+    def update(self, *args, **kwargs):
         # scroll
         self.rect.x += cam_scroll
 
 
 class Decoration(pygame.sprite.Sprite):
+
     def __init__(self, img, x, y):
         super().__init__()
         self.image = img
@@ -471,12 +472,13 @@ class Decoration(pygame.sprite.Sprite):
             y + (tile_size - self.image.get_height()),
         )
 
-    def update(self):
+    def update(self, *args, **kwargs):
         # scroll
         self.rect.x += cam_scroll
 
 
 class Exit(pygame.sprite.Sprite):
+
     def __init__(self, img, x, y):
         super().__init__()
         self.image = img
@@ -486,12 +488,13 @@ class Exit(pygame.sprite.Sprite):
             y + (tile_size - self.image.get_height()),
         )
 
-    def update(self):
+    def update(self, *args, **kwargs):
         # scroll
         self.rect.x += cam_scroll
 
 
 class Item(pygame.sprite.Sprite):
+
     def __init__(self, item_type, x, y):
         super().__init__()
         self.item_type = item_type
@@ -502,7 +505,7 @@ class Item(pygame.sprite.Sprite):
             y + (tile_size - self.image.get_height()),
         )
 
-    def update(self):
+    def update(self, *args, **kwargs):
         # scroll
         self.rect.x += cam_scroll
         # check for collision with player
@@ -519,6 +522,7 @@ class Item(pygame.sprite.Sprite):
 
 
 class HealthBar:
+
     def __init__(self, x, y, health, max_health):
         self.x = x
         self.y = y
@@ -533,22 +537,21 @@ class HealthBar:
         # draw health bar
         pygame.draw.rect(screen, grey, (self.x, self.y, 104, 14))
         pygame.draw.rect(screen, BG, (self.x + 1, self.y + 1, 102, 12))
-        pygame.draw.rect(screen, white, (self.x + 2, self.y + 2, 100 * factor, 10))
+        pygame.draw.rect(screen, white,
+                         (self.x + 2, self.y + 2, 100 * factor, 10))
         # pygame.draw.rect(screen, grey, (self.x + 25, self.y, 3, 13))
         # pygame.draw.rect(screen, grey, (self.x + 51, self.y, 3, 13))
         # pygame.draw.rect(screen, grey, (self.x + 77, self.y, 3, 13))
-        pygame.draw.line(
-            screen, BG, (self.x + 25, self.y + 1), (self.x + 25, self.y + 11)
-        )
-        pygame.draw.line(
-            screen, BG, (self.x + 51, self.y + 1), (self.x + 51, self.y + 11)
-        )
-        pygame.draw.line(
-            screen, BG, (self.x + 77, self.y + 1), (self.x + 77, self.y + 11)
-        )
+        pygame.draw.line(screen, BG, (self.x + 25, self.y + 1),
+                         (self.x + 25, self.y + 11))
+        pygame.draw.line(screen, BG, (self.x + 51, self.y + 1),
+                         (self.x + 51, self.y + 11))
+        pygame.draw.line(screen, BG, (self.x + 77, self.y + 1),
+                         (self.x + 77, self.y + 11))
 
 
 class ShieldBar:
+
     def __init__(self, x, y, shield, max_shield):
         self.x = x
         self.y = y
@@ -564,22 +567,21 @@ class ShieldBar:
         pygame.draw.rect(screen, grey, (self.x, self.y, 104, 14))
         pygame.draw.rect(screen, BG, (self.x + 1, self.y + 1, 102, 12))
         pygame.draw.rect(screen, white, (self.x + 2, self.y + 2, 100, 10))
-        pygame.draw.rect(screen, blue, (self.x + 2, self.y + 2, 100 * factor, 10))
+        pygame.draw.rect(screen, blue,
+                         (self.x + 2, self.y + 2, 100 * factor, 10))
         # pygame.draw.rect(screen, grey, (self.x + 25, self.y, 3, 13))
         # pygame.draw.rect(screen, grey, (self.x + 51, self.y, 3, 13))
         # pygame.draw.rect(screen, grey, (self.x + 77, self.y, 3, 13))
-        pygame.draw.line(
-            screen, BG, (self.x + 25, self.y + 1), (self.x + 25, self.y + 11)
-        )
-        pygame.draw.line(
-            screen, BG, (self.x + 51, self.y + 1), (self.x + 51, self.y + 11)
-        )
-        pygame.draw.line(
-            screen, BG, (self.x + 77, self.y + 1), (self.x + 77, self.y + 11)
-        )
+        pygame.draw.line(screen, BG, (self.x + 25, self.y + 1),
+                         (self.x + 25, self.y + 11))
+        pygame.draw.line(screen, BG, (self.x + 51, self.y + 1),
+                         (self.x + 51, self.y + 11))
+        pygame.draw.line(screen, BG, (self.x + 77, self.y + 1),
+                         (self.x + 77, self.y + 11))
 
 
 class Bullet(pygame.sprite.Sprite):
+
     def __init__(self, x, y, direction):
         super().__init__()
         self.speed = 8
@@ -588,7 +590,7 @@ class Bullet(pygame.sprite.Sprite):
         self.rect.center = (x, y)
         self.direction = direction
 
-    def update(self):
+    def update(self, *args, **kwargs):
         # move bullet and scroll
         self.rect.x += (self.direction * self.speed) + cam_scroll
         # check if bullet is off screen
@@ -623,7 +625,6 @@ water_group = pygame.sprite.Group()
 decoration_group = pygame.sprite.Group()
 exit_group = pygame.sprite.Group()
 
-
 # empty tile list
 world_data = []
 for row in range(rows):
@@ -638,12 +639,16 @@ with open(LEVEL_DIR / f"level{level}_data.csv", newline="") as csv_file:
 world = World()
 player, health_bar, shield_bar = world.process_data(world_data)
 
-
 while True:
 
     clock.tick(FPS)
 
-    if start_game == False:
+    # DEBUG
+    # screen.fill((255, 0, 0))
+    # pygame.display.update()
+    # continue
+
+    if not start_game:
         # display title screen
         title_screen()
 
