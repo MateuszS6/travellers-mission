@@ -4,7 +4,6 @@ import random
 import csv
 import button
 from pathlib import Path
-from typing import Any, cast
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 ASSETS_DIR = BASE_DIR / "assets"
@@ -287,9 +286,11 @@ class Soldier(pygame.sprite.Sprite):
                     self.in_air = False
                     dy = tile[1].top - self.rect.bottom
         # check water collision
-        if pygame.sprite.spritecollide(cast(Any, self), water_group, False):
-            self.health = 0
-            # update rectangle position
+        for water in water_group:
+            if water.rect.colliderect(self.rect):
+                self.health = 0
+                break
+        # update rectangle position
         self.rect.x += dx
         self.rect.y += dy
         # update camera scroll with player position
@@ -598,18 +599,20 @@ class Bullet(pygame.sprite.Sprite):
             if tile[1].colliderect(self.rect):
                 self.kill()
         # check for collision with character
-        if pygame.sprite.spritecollide(cast(Any, player), bullet_group, False):
-            if player.alive and player.shield > 0:
-                player.shield -= 20
-                self.kill()
-            else:
-                player.health -= 10
+        for bullet in bullet_group:
+            if bullet.rect.colliderect(player.rect):
+                if player.alive and player.shield > 0:
+                    player.shield -= 20
+                    self.kill()
+                else:
+                    player.health -= 10
                 self.kill()
         for enemy in enemy_group:
-            if pygame.sprite.spritecollide(enemy, bullet_group, False):
-                if enemy.alive:
-                    enemy.health -= 25
-                    self.kill()
+            for bullet in bullet_group:
+                if bullet.rect.colliderect(enemy.rect):
+                    if enemy.alive:
+                        enemy.health -= 25
+                        self.kill()
 
 
 # sprite groups
