@@ -1,5 +1,11 @@
 # The Traveller's Mission
 
+> [!NOTE]
+> This was originally built and run on Replit, but has since been migrated into a local Python/Pygame project with a cleaner structure and dependency setup.
+
 ## Game
 
-[Link](https://replit.com/@MateuszStepien1/The-Travellers-Mission)
+### [Play the game here!](https://the-travellers-mission--mateuszstepien1.replit.app/)
+
+> [!NOTE]
+> This link is no longer active.
