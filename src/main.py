@@ -4,12 +4,13 @@ import random
 import csv
 import button
 from pathlib import Path
+from typing import Any, cast
 
-BASE_DIR = Path(__file__).resolve().parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 ASSETS_DIR = BASE_DIR / "assets"
 IMG_DIR = ASSETS_DIR / "img"
 FONT_DIR = ASSETS_DIR / "fonts"
-LEVEL_DIR = BASE_DIR / "levels"
+LEVEL_DIR = ASSETS_DIR / "levels"
 
 pygame.init()
 
@@ -46,7 +47,7 @@ shoot = False
 # images
 # title screen
 landscape_img = pygame.image.load(
-    ASSETS_DIR / IMG_DIR / "background" / "TitleScreenBG.jpg"
+    IMG_DIR / "background" / "TitleScreenBG.jpg"
 ).convert_alpha()
 landscape_img = pygame.transform.scale(
     landscape_img,
@@ -55,31 +56,31 @@ landscape_img = pygame.transform.scale(
 # rect = landscape_img.get_rect()
 # rect.center = (x, y)
 # buttons
-start_img = pygame.image.load(ASSETS_DIR / IMG_DIR / "start_btn.png").convert_alpha()
-quit_img = pygame.image.load(ASSETS_DIR / IMG_DIR / "exit_btn.png").convert_alpha()
+start_img = pygame.image.load(IMG_DIR / "start_btn.png").convert_alpha()
+quit_img = pygame.image.load(IMG_DIR / "exit_btn.png").convert_alpha()
 # background
 sky_img = pygame.image.load(
-    ASSETS_DIR / IMG_DIR / "background" / "sky.png"
+    IMG_DIR / "background" / "sky.png"
 ).convert_alpha()
 sky_img = pygame.transform.scale(
     sky_img, (int(sky_img.get_width() * 0.625), int(sky_img.get_height() * 0.625))
 )
 mountains_img = pygame.image.load(
-    ASSETS_DIR / IMG_DIR / "background" / "mountains.png"
+    IMG_DIR / "background" / "mountains.png"
 ).convert_alpha()
 mountains_img = pygame.transform.scale(
     mountains_img,
     (int(mountains_img.get_width() * 0.625), int(mountains_img.get_height() * 0.625)),
 )
 trees1_img = pygame.image.load(
-    ASSETS_DIR / IMG_DIR / "background" / "trees1.png"
+    IMG_DIR / "background" / "trees1.png"
 ).convert_alpha()
 trees1_img = pygame.transform.scale(
     trees1_img,
     (int(trees1_img.get_width() * 0.625), int(trees1_img.get_height() * 0.625)),
 )
 trees2_img = pygame.image.load(
-    ASSETS_DIR / IMG_DIR / "background" / "trees2.png"
+    IMG_DIR / "background" / "trees2.png"
 ).convert_alpha()
 trees2_img = pygame.transform.scale(
     trees2_img,
@@ -88,43 +89,43 @@ trees2_img = pygame.transform.scale(
 # tiles
 tiles = []
 for x in range(tile_types):
-    img = pygame.image.load(ASSETS_DIR / IMG_DIR / "tile" / f"{x}.png")
+    img = pygame.image.load(IMG_DIR / "tile" / f"{x}.png")
     img = pygame.transform.scale(img, (tile_size, tile_size))
     tiles.append(img)
 # bullet
 bullet_img = pygame.image.load(
-    ASSETS_DIR / IMG_DIR / "icons" / "IonBullet.png"
+    IMG_DIR / "icon" / "IonBullet.png"
 ).convert_alpha()
 bullet_img = pygame.transform.scale(
     bullet_img, (int(bullet_img.get_width() * 2), int(bullet_img.get_height() * 2))
 )
 # pick-ups
 reload_img = pygame.image.load(
-    ASSETS_DIR / IMG_DIR / "icons" / "ReloadBox.png"
+    IMG_DIR / "icon" / "ReloadBox.png"
 ).convert_alpha()
 reload_img = pygame.transform.scale(
     reload_img,
     (int(reload_img.get_width() * 2 / 3), int(reload_img.get_height() * 2 / 3)),
 )
-key_img = pygame.image.load(ASSETS_DIR / IMG_DIR / "icons" / "Key.png").convert_alpha()
+key_img = pygame.image.load(IMG_DIR / "icon" / "Key.png").convert_alpha()
 key_img = pygame.transform.scale(
     key_img, (int(key_img.get_width() * 2 / 3), int(key_img.get_height() * 2 / 3))
 )
 items = {"Reload": reload_img, "Key": key_img}
-# icons
-h_img = pygame.image.load(ASSETS_DIR / IMG_DIR / "icons" / "Health.png").convert_alpha()
-r_img = pygame.image.load(ASSETS_DIR / IMG_DIR / "icons" / "Reload.png").convert_alpha()
-a_img = pygame.image.load(ASSETS_DIR / IMG_DIR / "icons" / "Ammo.png").convert_alpha()
+# icon
+h_img = pygame.image.load(IMG_DIR / "icon" / "Health.png").convert_alpha()
+r_img = pygame.image.load(IMG_DIR / "icon" / "Reload.png").convert_alpha()
+a_img = pygame.image.load(IMG_DIR / "icon" / "Ammo.png").convert_alpha()
 health = pygame.image.load(
-    ASSETS_DIR / IMG_DIR / "icons" / "PlusHealth.png"
+    IMG_DIR / "icon" / "PlusHealth.png"
 ).convert_alpha()
 # heart = pygame.transform.scale(heart, (int(heart.get_width() * 1.5), int(heart.get_height() * 1.5)))
 shield = pygame.image.load(
-    ASSETS_DIR / IMG_DIR / "icons" / "PlusShield.png"
+    IMG_DIR / "icon" / "PlusShield.png"
 ).convert_alpha()
 # shield = pygame.transform.scale(shield, (int(shield.get_width() * 1.5), int(shield.get_height() * 1.5)))
 # exit
-exit_img = pygame.image.load(ASSETS_DIR / IMG_DIR / "tile" / "19.png").convert_alpha()
+exit_img = pygame.image.load(IMG_DIR / "tile" / "19.png").convert_alpha()
 
 # colours
 BG = (28, 35, 51)
@@ -137,9 +138,9 @@ transparent_black = (0, 0, 0)
 # transparent_black.set_alpha(50)
 
 # fonts
-font = pygame.font.Font(ASSETS_DIR / FONT_DIR / "BAHNSCHRIFT.TTF", 20)
-title_font = pygame.font.Font(ASSETS_DIR / FONT_DIR / "BAHNSCHRIFT.TTF", 50)
-sub_font = pygame.font.Font(ASSETS_DIR / FONT_DIR / "BAHNSCHRIFT.TTF", 30)
+font = pygame.font.Font(FONT_DIR / "BAHNSCHRIFT.TTF", 20)
+title_font = pygame.font.Font(FONT_DIR / "BAHNSCHRIFT.TTF", 50)
+sub_font = pygame.font.Font(FONT_DIR / "BAHNSCHRIFT.TTF", 30)
 
 # buttons
 start_button = button.Button(30, screen_height - 130, start_img, 0.4)
@@ -175,8 +176,9 @@ def draw_text(text, font, colour, x, y):
 
 class Soldier(pygame.sprite.Sprite):
     def __init__(self, char_type, x, y, scale, speed, ammo):
-        pygame.sprite.Sprite.__init__(self)
-        self.alive = True
+        super().__init__()
+
+        self._alive = True
         self.char_type = char_type
         self.speed = speed
         self.ammo = ammo
@@ -211,10 +213,10 @@ class Soldier(pygame.sprite.Sprite):
             # reset temporary image list
             temp_list = []
             # count number of files in folder
-            num_frames = len(os.listdir( ASSETS_DIR / IMG_DIR / self.char_type / animation ))
+            num_frames = len(os.listdir(IMG_DIR / self.char_type / animation))
             for i in range(num_frames):
                 img = pygame.image.load(
-                    ASSETS_DIR / IMG_DIR / self.char_type / animation / f"{i}.png"
+                    IMG_DIR / self.char_type / animation / f"{i}.png"
                 ).convert_alpha()
                 img = pygame.transform.scale(
                     img, (int(img.get_width() * scale), int(img.get_height() * scale))
@@ -226,6 +228,10 @@ class Soldier(pygame.sprite.Sprite):
         self.rect.center = (x, y)
         self.width = self.image.get_width()
         self.height = self.image.get_height()
+
+    @property
+    def alive(self):
+        return self._alive
 
     def update(self):
         self.update_animation()
@@ -281,7 +287,7 @@ class Soldier(pygame.sprite.Sprite):
                     self.in_air = False
                     dy = tile[1].top - self.rect.bottom
         # check water collision
-        if pygame.sprite.spritecollide(self, water_group, False):
+        if pygame.sprite.spritecollide(cast(Any, self), water_group, False):
             self.health = 0
             # update rectangle position
         self.rect.x += dx
@@ -374,7 +380,7 @@ class Soldier(pygame.sprite.Sprite):
         if self.health <= 0:
             self.health = 0
             self.speed = 0
-            self.alive = False
+            self._alive = False
             self.update_action(3)  # 3: death
 
     def draw(self):
@@ -441,7 +447,7 @@ class World:
 
 class Water(pygame.sprite.Sprite):
     def __init__(self, img, x, y):
-        pygame.sprite.Sprite.__init__(self)
+        super().__init__()
         self.image = img
         self.rect = self.image.get_rect()
         self.rect.midtop = (
@@ -456,7 +462,7 @@ class Water(pygame.sprite.Sprite):
 
 class Decoration(pygame.sprite.Sprite):
     def __init__(self, img, x, y):
-        pygame.sprite.Sprite.__init__(self)
+        super().__init__()
         self.image = img
         self.rect = self.image.get_rect()
         self.rect.midtop = (
@@ -471,7 +477,7 @@ class Decoration(pygame.sprite.Sprite):
 
 class Exit(pygame.sprite.Sprite):
     def __init__(self, img, x, y):
-        pygame.sprite.Sprite.__init__(self)
+        super().__init__()
         self.image = img
         self.rect = self.image.get_rect()
         self.rect.midtop = (
@@ -486,7 +492,7 @@ class Exit(pygame.sprite.Sprite):
 
 class Item(pygame.sprite.Sprite):
     def __init__(self, item_type, x, y):
-        pygame.sprite.Sprite.__init__(self)
+        super().__init__()
         self.item_type = item_type
         self.image = items[self.item_type]
         self.rect = self.image.get_rect()
@@ -574,7 +580,7 @@ class ShieldBar:
 
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, x, y, direction):
-        pygame.sprite.Sprite.__init__(self)
+        super().__init__()
         self.speed = 8
         self.image = bullet_img
         self.rect = self.image.get_rect()
@@ -592,7 +598,7 @@ class Bullet(pygame.sprite.Sprite):
             if tile[1].colliderect(self.rect):
                 self.kill()
         # check for collision with character
-        if pygame.sprite.spritecollide(player, bullet_group, False):
+        if pygame.sprite.spritecollide(cast(Any, player), bullet_group, False):
             if player.alive and player.shield > 0:
                 player.shield -= 20
                 self.kill()
@@ -621,7 +627,7 @@ for row in range(rows):
     r = [-1] * columns
     world_data.append(r)
 # load level data and create world
-with open(ASSETS_DIR / LEVEL_DIR / f"level{level}_data.csv", newline="") as csv_file:
+with open(LEVEL_DIR / f"level{level}_data.csv", newline="") as csv_file:
     reader = csv.reader(csv_file, delimiter=",")
     for x, row in enumerate(reader):
         for y, tile in enumerate(row):
@@ -648,8 +654,6 @@ while True:
         if player.shield > 0:
             screen.blit(shield, (12, 11))
             shield_bar.draw(player.shield)
-            if player.shield <= 0:
-                shield_bar.kill()
         else:
             screen.blit(health, (12, 11))
             health_bar.draw(player.health)
@@ -685,6 +689,7 @@ while True:
 
         # update player actions
         if player.alive:
+            # TODO:
             # shoot bullets
             if shoot:
                 player.shoot()
